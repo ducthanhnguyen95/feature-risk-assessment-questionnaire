@@ -1,52 +1,5 @@
-# System Design & Architecture - Risk Assessment Questionnaire
-
-## Architecture Overview
-**What is the high-level system structure?**
-
-```mermaid
-graph TD
-    FE[Frontend App] -->|1. GET /api/questionnaires/:id| Strapi[Strapi CMS]
-    FE -->|2. Display Questions| User[End User]
-    User -->|3. Submit Answers| FE
-    FE -->|4. POST /api/risk-assessments| Strapi
-    Strapi -->|5. Calculate Score| Engine[Risk Calculation Engine]
-    Engine -->|6. Query Config| DB[(PostgreSQL)]
-    DB -->|7. Risk Thresholds| Engine
-    Engine -->|8. Determine Risk Level| Strapi
-    Strapi -->|9. Return Result| FE
-    Strapi -->|10. Log Assessment| DB
-    
-    Admin[Admin User] -->|Manage Content| StrapiAdmin[Strapi Admin Panel]
-    StrapiAdmin -->|CRUD Operations| DB
-    
-    style Engine fill:#f9f,stroke:#333,stroke-width:2px
-    style Strapi fill:#bbf,stroke:#333,stroke-width:2px
-    style DB fill:#bfb,stroke:#333,stroke-width:2px
-```
-
-### Key Components
-1. **Strapi CMS**: Headless CMS for content management and API exposure
-2. **Risk Calculation Engine**: Custom service/controller xử lý logic tính toán
-3. **PostgreSQL Database**: Lưu trữ questionnaire config, user responses, và assessment results
-4. **Frontend Application**: React/Next.js app consume APIs
-5. **Admin Panel**: Strapi's built-in admin UI cho content management
-
-### Technology Stack
-- **Backend Framework**: Strapi v5.x (Node.js + TypeScript)
-- **Database**: PostgreSQL 15+ (với JSONB support cho flexible schema)
-- **API Style**: RESTful (default Strapi)
-- **Validation**: Joi hoặc Yup schemas
-- **Authentication**: Strapi's built-in JWT auth
-- **Deployment**: Docker + Docker Compose
-
-**Rationale**:
-- Strapi: Giảm development time với auto-generated APIs, built-in admin panel
-- PostgreSQL: ACID compliance, JSONB cho flexible response storage
-- REST: Simple integration, wide client support
-
+# Risk Assessment Questionnaire
 ## Data Models
-**What data do we need to manage?**
-
 ### Core Entities
 
 #### 1. Questionnaire (Collection Type)
@@ -54,11 +7,7 @@ graph TD
 
 ```typescript
 interface Questionnaire {
-  // === IDENTIFICATION FIELDS ===
-  id: number; 
-  // Primary key, auto-generated
-  // Mục đích: Định danh duy nhất cho mỗi questionnaire
-  
+  id: number; // Primary key, auto-generated
   name: string; 
   // Tên hiển thị của bộ khảo sát
   // VD: "WealthHup Risk Assessment v1.0"

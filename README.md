@@ -21,7 +21,6 @@ interface Questionnaire {
 
 #### 2. Question (Collection Type)
 **Vai trò**: Đại diện cho một câu hỏi trong bộ khảo sát. Mỗi question thuộc về một questionnaire và có thể có nhiều options.
-
 ```typescript
 interface Question {
   // === IDENTIFICATION ===

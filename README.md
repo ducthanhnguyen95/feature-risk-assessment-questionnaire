@@ -1,10 +1,3 @@
----
-phase: design
-title: System Design & Architecture - Risk Assessment Questionnaire
-description: Define the technical architecture, components, and data models for dynamic risk assessment
-feature: risk-assessment-questionnaire
----
-
 # System Design & Architecture - Risk Assessment Questionnaire
 
 ## Architecture Overview

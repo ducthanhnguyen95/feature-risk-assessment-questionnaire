@@ -4,56 +4,18 @@
 
 #### 1. Questionnaire (Collection Type)
 **Vai trò**: Đại diện cho một bộ khảo sát đánh giá rủi ro hoàn chỉnh. Mỗi questionnaire là một version độc lập có thể được active/inactive.
-
 ```typescript
 interface Questionnaire {
   id: number; // Primary key, auto-generated
-  name: string; 
-  // Tên hiển thị của bộ khảo sát
-  // VD: "WealthHup Risk Assessment v1.0"
-  // Mục đích: Giúp admin phân biệt các version khác nhau
-  
+  name: string; // Tên hiển thị của bộ khảo sát Giúp admin phân biệt các version khác nhau, VD: "WealthHup Risk Assessment v1.0"
   description: string; 
-  // Mô tả chi tiết về mục đích và nội dung của questionnaire
-  // Mục đích: Cung cấp context cho admin và có thể hiển thị cho user
-  
-  // === VERSION CONTROL ===
-  version: string; 
-  // Phiên bản của questionnaire theo semantic versioning
-  // VD: "1.0.0", "1.1.0", "2.0.0"
-  // Mục đích: Tracking changes, cho phép rollback nếu cần
-  
-  // === STATUS & CONFIGURATION ===
-  isActive: boolean; 
-  // Flag đánh dấu questionnaire nào đang được sử dụng
-  // Chỉ có 1 questionnaire active tại một thời điểm
-  // Mục đích: Control việc questionnaire nào được expose qua API
-  
+  version: string; // Phiên bản của questionnaire theo semantic versioning, tracking changes, cho phép rollback nếu cần, vd: "1.0.0", "1.1.0", "2.0.0"
+  isActive: boolean; // Flag đánh dấu questionnaire nào đang được sử dụng, chỉ có 1 questionnaire active tại một thời điểm
   riskModelType: 'capacity-heavy' | 'attitude-heavy' | 'hybrid'; 
-  // Loại mô hình đánh giá rủi ro được áp dụng
-  // - capacity-heavy: Ưu tiên khả năng tài chính (Phase 1 MVP)
-  // - attitude-heavy: Ưu tiên thái độ/cảm xúc đầu tư
-  // - hybrid: Kết hợp cả hai (Phase 2+)
-  // Mục đích: Xác định công thức weighting khi tính điểm
-  
-  // === RELATIONSHIPS ===
-  questions: Question[]; 
-  // Relation: One-to-Many với Question
-  // Một questionnaire chứa nhiều questions
-  // Mục đích: Cấu trúc hierarchical của bộ khảo sát
-  
-  // === TIMESTAMPS (Strapi auto-managed) ===
+  questions: Question[];  // Relation: One-to-Many với Question
   createdAt: Date; 
-  // Thời điểm tạo questionnaire
-  
   updatedAt: Date; 
-  // Thời điểm cập nhật gần nhất
-  // Mục đích: Audit trail, tracking changes
-  
   publishedAt: Date; 
-  // Thời điểm publish (Strapi draft/publish system)
-  // null = draft, có giá trị = published
-  // Mục đích: Cho phép admin chuẩn bị questionnaire trước khi public
 }
 ```
 
